@@ -3,26 +3,22 @@ import Student from 'src/app/entity/Student';
 import { StudentService } from 'src/app/student.service';
 
 @Component({
-  selector: 'app-getstudents',
-  templateUrl: './getstudents.component.html',
-  styleUrls: ['./getstudents.component.css']
+  selector: 'app-deletestudent',
+  templateUrl: './deletestudent.component.html',
+  styleUrls: ['./deletestudent.component.css']
 })
-export class GetstudentsComponent implements OnInit {
+export class DeletestudentComponent implements OnInit {
 
   student: Student = new Student();
   students:Student[] = [];
 
-  getStudents() {
-    const observable = this.studentService.getStudents()
-    observable.subscribe((response: any) =>{
+  deleteRow(student, index)   {
+    const observable = this.studentService.deleteStudent(student)
+    observable.subscribe((response:any) =>{
       console.log(response);
-      this.students = response as Student[];
-    },
-      function(error) {
-       console.log(error);
-        alert("something went wrong please check!")
-      }
-    )
+      this.students.splice(index,1)
+
+    })
   }
 
   constructor(public studentService: StudentService) { }
